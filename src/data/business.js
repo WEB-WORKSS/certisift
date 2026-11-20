@@ -37,7 +37,16 @@ CS.business = {
 
   // ---- Leadership ---------------------------------------------------------
   founders: [
-    { name: "Abiola Tijani Babatunde", title: "Founder", linkedin: null, status: "verified" },
+    {
+      name: "Abiola Tijani Babatunde",
+      title: "Founder",
+      linkedin: null,
+      status: "verified",
+      // Drafted for the founder's approval — edit to his own words before publishing.
+      quote:
+        "Every lot that reaches production should be released on evidence, not on a quick look at a PDF. I founded CertiSift so quality teams can check every supplier certificate against their own specification — quickly, consistently and with a record they can stand behind.",
+      aim: "To make supplier certificate checks fast, consistent and audit-ready for every food manufacturer, so non-conforming materials are stopped before production begins.",
+    },
   ],
 
   // ---- Positioning ------------------------------------------------------
@@ -142,7 +151,7 @@ CS.business = {
     status: "assumption",
     note: "No pricing has been set. Public site describes pilot structure only.",
     plans: [
-      { name: "Pilot", for: "One site, one QA team", points: ["Guided setup of your specifications", "Sample and real CoA testing", "Weekly review with the founding team"] },
+      { name: "Pilot", for: "One site, one QA team", points: ["Guided setup of your specifications", "Sample and real CoA testing", "Weekly review with the founder"] },
       { name: "Site", for: "Single production site", points: ["Unlimited specifications", "Supplier monitoring", "Exportable audit reports"] },
       { name: "Multi-site", for: "Groups with several plants", points: ["Shared supplier records", "Roles and approvals (roadmap)", "Integration support (roadmap)"] },
     ],
@@ -173,7 +182,7 @@ CS.verificationItems = function () {
   const push = (label, ok, detail, blocker) => items.push({ label, ok, detail, blocker: !!blocker });
   push("Company domain", !!b.domain.value, b.domain.value || `Not confirmed. Suggested: ${b.domain.suggestion}`, true);
   push("Official business email", !!b.email.value, b.email.value || "Not supplied. Needed for website contact and AWS account.", true);
-  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name} — ${f.title}`).join("; ") : "Not supplied. Team section is hidden on the website.", true);
+  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name} — ${f.title}`).join("; ") : "Not supplied. Founder section is hidden on the website.", true);
   if (b.founders.length) {
     const noLi = b.founders.filter((f) => !f.linkedin);
     push("Founder LinkedIn profile", noLi.length === 0, noLi.length ? `Not supplied for ${noLi.map((f) => f.name).join(", ")}. Recommended for AWS Activate credibility.` : "Linked");

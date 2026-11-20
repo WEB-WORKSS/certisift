@@ -11,7 +11,7 @@ window.CS = window.CS || {};
     ["how", "How It Works"],
     ["technology", "Technology"],
     ["pricing", "Pricing"],
-    ...(B.founders.length ? [["team", "Team"]] : []),
+    ...(B.founders.length ? [["founder", "Founder"]] : []),
     ["contact", "Contact"],
   ];
 
@@ -303,7 +303,16 @@ window.CS = window.CS || {};
         </div>
       </section>
 
-      ${B.founders.length ? `<section class="block alt" id="team"><div class="wrap"><span class="eyebrow">Team</span><h2 class="title">The people behind ${esc(B.name)}</h2><div class="grid g3">${B.founders.map((p) => `<div class="card" style="display:flex;gap:16px;align-items:center"><div aria-hidden="true" style="flex:0 0 60px;height:60px;border-radius:50%;background:var(--ink);color:var(--mark);display:grid;place-items:center;font:400 24px var(--serif)">${esc(p.name.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join(""))}</div><div><h2 style="font:400 24px/1.15 var(--serif)">${esc(p.name)}</h2><p class="sub" style="margin:2px 0 0">${esc(p.title)}, ${esc(B.name)}</p>${p.linkedin ? `<a href="${esc(p.linkedin)}" target="_blank" rel="noopener" style="font-size:14px">LinkedIn</a>` : ""}</div></div>`).join("")}</div></div></section>` : ""}
+      ${B.founders.length ? `<section class="block" id="founder" style="padding-top:0"><div class="wrap">${B.founders.map((p) => `
+        <figure class="founder">
+          <span class="eyebrow">Founder</span>
+          ${p.quote ? `<blockquote>“${esc(p.quote)}”</blockquote>` : ""}
+          <figcaption>
+            <div class="mono-badge" aria-hidden="true">${esc(p.name.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join(""))}</div>
+            <div><b>${esc(p.name)}</b><span>${esc(p.title)}, ${esc(B.name)} · Founded ${esc(B.foundingYear.value)}</span>${p.linkedin ? `<a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>
+          </figcaption>
+          ${p.aim ? `<div class="aim"><span>Our aim</span><p>${esc(p.aim)}</p></div>` : ""}
+        </figure>`).join("")}</div></section>` : ""}
 
       <section class="block alt" id="faq">
         <div class="wrap"><span class="eyebrow">Questions</span><h2 class="title">Straight answers.</h2>
