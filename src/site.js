@@ -303,7 +303,7 @@ window.CS = window.CS || {};
         </div>
       </section>
 
-      ${B.founders.length ? `<section class="block alt" id="team"><div class="wrap"><span class="eyebrow">Team</span><h2 class="title">The people behind ${esc(B.name)}</h2><div class="grid g3">${B.founders.map((p) => `<div class="card"><h2>${esc(p.name)}</h2><p class="sub">${esc(p.title)}</p>${p.linkedin ? `<a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>`).join("")}</div></div></section>` : ""}
+      ${B.founders.length ? `<section class="block alt" id="team"><div class="wrap"><span class="eyebrow">Team</span><h2 class="title">The people behind ${esc(B.name)}</h2><div class="grid g3">${B.founders.map((p) => `<div class="card" style="display:flex;gap:16px;align-items:center"><div aria-hidden="true" style="flex:0 0 60px;height:60px;border-radius:50%;background:var(--ink);color:var(--mark);display:grid;place-items:center;font:400 24px var(--serif)">${esc(p.name.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join(""))}</div><div><h2 style="font:400 24px/1.15 var(--serif)">${esc(p.name)}</h2><p class="sub" style="margin:2px 0 0">${esc(p.title)}, ${esc(B.name)}</p>${p.linkedin ? `<a href="${esc(p.linkedin)}" target="_blank" rel="noopener" style="font-size:14px">LinkedIn</a>` : ""}</div></div>`).join("")}</div></div></section>` : ""}
 
       <section class="block alt" id="faq">
         <div class="wrap"><span class="eyebrow">Questions</span><h2 class="title">Straight answers.</h2>

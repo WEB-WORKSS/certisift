@@ -35,8 +35,10 @@ CS.business = {
     note: "A similarly named 'CertiSwift' project exists on LinkedIn with a different focus. Run trademark searches (classes 9 and 42) before launch.",
   },
 
-  // ---- Leadership (none supplied — team section stays hidden) -----------
-  founders: [],
+  // ---- Leadership ---------------------------------------------------------
+  founders: [
+    { name: "Abiola Tijani Babatunde", title: "Founder", linkedin: null, status: "verified" },
+  ],
 
   // ---- Positioning ------------------------------------------------------
   industry: "Manufacturing Technology / AI-powered Quality Assurance SaaS",
@@ -171,7 +173,11 @@ CS.verificationItems = function () {
   const push = (label, ok, detail, blocker) => items.push({ label, ok, detail, blocker: !!blocker });
   push("Company domain", !!b.domain.value, b.domain.value || `Not confirmed. Suggested: ${b.domain.suggestion}`, true);
   push("Official business email", !!b.email.value, b.email.value || "Not supplied. Needed for website contact and AWS account.", true);
-  push("Founder name, title and LinkedIn", b.founders.length > 0, b.founders.length ? `${b.founders.length} listed` : "Not supplied. Team section is hidden on the website.", true);
+  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name} — ${f.title}`).join("; ") : "Not supplied. Team section is hidden on the website.", true);
+  if (b.founders.length) {
+    const noLi = b.founders.filter((f) => !f.linkedin);
+    push("Founder LinkedIn profile", noLi.length === 0, noLi.length ? `Not supplied for ${noLi.map((f) => f.name).join(", ")}. Recommended for AWS Activate credibility.` : "Linked");
+  }
   push("LinkedIn company page", !!b.linkedin.value, b.linkedin.value || `Not created. Proposed: linkedin.com/company/${b.linkedin.proposedSlug}`, true);
   push("Headquarters", !!b.headquarters.value, b.headquarters.value || "Not supplied.");
   push("Founding year", b.foundingYear.status === "verified", `${b.foundingYear.value} (${b.foundingYear.status})`);
