@@ -14,16 +14,16 @@ window.CS = window.CS || {};
   /* ---------- Generated copy ---------- */
   const copy = {
     activateDescription:
-      `${B.name} is an early-stage B2B SaaS company building supplier quality verification software for food and beverage manufacturers. QA teams today review every supplier Certificate of Analysis by hand against internal specifications — a slow, inconsistent process in which out-of-spec, missing or copied results can slip through and lead to production holds, scrapped batches or recalls. ${B.name} extracts the supplier, lot and test results from each certificate, checks every value against the customer's own specification, flags anomalies against the supplier's history and records the release decision in an audit-ready report. A working MVP of the verification engine (${implemented.slice(0, 3).join(", ")} and ${implemented.slice(3).join(", ")}) runs today on text-based certificates. We are now building the hosted platform on AWS.`,
+      `${B.name} is an early-stage B2B SaaS company building supplier quality verification software for food and beverage manufacturers. QA teams today review every supplier Certificate of Analysis by hand against internal specifications. This is a slow, inconsistent process in which out-of-spec, missing or copied results can slip through and lead to production holds, scrapped batches or recalls. ${B.name} extracts the supplier, lot and test results from each certificate, checks every value against the customer's own specification, flags anomalies against the supplier's history and records the release decision in an audit-ready report. A working MVP of the verification engine (${implemented.slice(0, 3).join(", ")} and ${implemented.slice(3).join(", ")}) runs today on text-based certificates. We are now building the hosted platform on AWS.`,
     awsUsage:
       `We plan to build the production platform on AWS. Amazon Textract will extract text and tables from scanned and PDF certificates, and Amazon Bedrock will interpret unfamiliar certificate layouts, normalise parameter names and support anomaly review. AWS Step Functions will orchestrate the workflow, with AWS Lambda running extraction, specification matching, anomaly checks and report generation. Certificates and reports will be stored in Amazon S3 with AWS KMS encryption, specifications, supplier records and results in Amazon DynamoDB, and the web app will access the platform through Amazon API Gateway with Amazon Cognito for sign-in and tenant isolation. Amazon CloudWatch will provide monitoring. Credits would fund development and testing of this architecture, Textract and Bedrock usage during pilots with early food manufacturers, and the first production environment.`,
     customers:
-      `Initial focus: ${B.targetCustomers.beachhead.toLowerCase()} — buyers are ${B.targetCustomers.buyers.join(", ")}; daily users are ${B.targetCustomers.users.join(", ").toLowerCase()}. Planned expansion: ${B.targetCustomers.expansion.join("; ").toLowerCase()}.`,
-    linkedinTagline: "Supplier CoA verification for food manufacturers — check every certificate against your spec before release.",
+      `Initial focus: ${B.targetCustomers.beachhead.toLowerCase()}. Buyers are ${B.targetCustomers.buyers.join(", ")}; daily users are ${B.targetCustomers.users.join(", ").toLowerCase()}. Planned expansion: ${B.targetCustomers.expansion.join("; ").toLowerCase()}.`,
+    linkedinTagline: "Supplier CoA verification for food manufacturers. Check every certificate against your spec before release.",
     linkedinAbout:
       `${B.name} helps food and beverage manufacturers verify supplier Certificates of Analysis before materials reach production.
 
-Every incoming lot arrives with a certificate that QA must compare, line by line, against an internal specification. Formats vary by supplier and lab, reviews happen under time pressure, and near-limit results, missing tests or copied values can slip through — leading to production holds, scrapped batches and recalls.
+Every incoming lot arrives with a certificate that QA must compare, line by line, against an internal specification. Formats vary by supplier and lab, reviews happen under time pressure, and near-limit results, missing tests or copied values can slip through, leading to production holds, scrapped batches and recalls.
 
 ${B.name} reads each certificate, extracts the supplier, lot and every test result, checks each value against your own specification and flags what needs attention: out-of-spec results, missing tests, unsigned or expired certificates, and results that are unusual for that supplier. Reviewers record the release decision, and supplier performance builds up automatically for audits and supplier reviews.
 
@@ -32,15 +32,15 @@ We are currently building our initial product and working with QA teams on early
 Interested in trying it on your own certificates? Get in touch.`,
     specialties: ["Supplier quality", "Certificate of Analysis verification", "Food safety", "Quality assurance software", "Incoming goods inspection", "Specification management", "Supplier performance monitoring", "AI document processing"],
     posts: [
-      { title: "Introduction", text: `Introducing ${B.name}.\n\nEvery ingredient lot that arrives at a food factory comes with a Certificate of Analysis. Someone in QA has to read it and compare every result with the internal specification — often under time pressure, often across dozens of supplier formats.\n\nWe're building ${B.name} to do that comparison automatically: extract the results, check them against your spec, and flag what needs a closer look before the lot is released.\n\nWe're early, building our first product, and we'd like to hear from QA teams about how you handle CoAs today.` },
-      { title: "Problem insight", text: `Three things that slip through manual CoA review:\n\n1. Results that pass, but sit right on the limit.\n2. Tests that are simply missing from the certificate.\n3. Values identical to last month's certificate — a sign the numbers may have been copied.\n\nThe ${B.name} engine checks for all three on every certificate. What would you add to the list?` },
-      { title: "Build update", text: `Build update: the ${B.name} verification engine now handles the messy parts of real certificates — scientific notation (3.8 × 10⁴), "<10" reporting limits, decimal commas, "Not detected" pathogen results and supplier-specific parameter names.\n\nNext up: support for scanned PDFs. If you'd be willing to share a few anonymised certificates for testing, please get in touch.` },
+      { title: "Introduction", text: `Introducing ${B.name}.\n\nEvery ingredient lot that arrives at a food factory comes with a Certificate of Analysis. Someone in QA has to read it and compare every result with the internal specification, often under time pressure and across dozens of supplier formats.\n\nWe're building ${B.name} to do that comparison automatically: extract the results, check them against your spec, and flag what needs a closer look before the lot is released.\n\nWe're early, building our first product, and we'd like to hear from QA teams about how you handle CoAs today.` },
+      { title: "Problem insight", text: `Three things that slip through manual CoA review:\n\n1. Results that pass, but sit right on the limit.\n2. Tests that are simply missing from the certificate.\n3. Values identical to last month's certificate, a sign the numbers may have been copied.\n\nThe ${B.name} engine checks for all three on every certificate. What would you add to the list?` },
+      { title: "Build update", text: `Build update: the ${B.name} verification engine now handles the messy parts of real certificates: scientific notation (3.8 × 10⁴), "<10" reporting limits, decimal commas, "Not detected" pathogen results and supplier-specific parameter names.\n\nNext up: support for scanned PDFs. If you'd be willing to share a few anonymised certificates for testing, please get in touch.` },
     ],
   };
   CS.centerCopy = copy;
 
   const field = (label, text, limit, note) => `
-    <div class="field-label"><span>${label}</span>${limit ? `<small>${text.length} / ${limit} chars${text.length > limit ? " — over limit" : ""}</small>` : `<small>${text.length} chars</small>`}</div>
+    <div class="field-label"><span>${label}</span>${limit ? `<small>${text.length} / ${limit} chars${text.length > limit ? " (over limit)" : ""}</small>` : `<small>${text.length} chars</small>`}</div>
     <div class="copybox">${esc(text)}<button class="btn btn-ghost btn-sm copy" data-copy="${esc(text)}">Copy</button></div>
     ${note ? `<p class="muted" style="font-size:13px;margin:6px 0 0">${note}</p>` : ""}`;
 
@@ -70,8 +70,8 @@ Interested in trying it on your own certificates? Get in touch.`,
       </div>
       <div class="card" style="margin-top:18px"><h2>Feature classification</h2><p class="sub">Public copy describes only what each capability does at its current classification.</p>
         <table class="t"><thead><tr><th>Feature</th><th>Classification</th><th>What exists today</th><th>Planned</th></tr></thead><tbody>
-        ${B.features.map((f) => `<tr><td><b style="font-weight:500">${esc(f.name)}</b></td><td><span class="badge ${f.classification}">${f.classification}</span></td><td style="font-size:14px">${esc(f.scope)}</td><td style="font-size:14px">${esc(f.planned || "—")}</td></tr>`).join("")}
-        ${B.roadmap.map((r) => `<tr><td>${esc(r)}</td><td><span class="badge planned">planned</span></td><td class="muted">—</td><td class="muted">Roadmap</td></tr>`).join("")}
+        ${B.features.map((f) => `<tr><td><b style="font-weight:500">${esc(f.name)}</b></td><td><span class="badge ${f.classification}">${f.classification}</span></td><td style="font-size:14px">${esc(f.scope)}</td><td style="font-size:14px">${esc(f.planned || "N/A")}</td></tr>`).join("")}
+        ${B.roadmap.map((r) => `<tr><td>${esc(r)}</td><td><span class="badge planned">planned</span></td><td class="muted">N/A</td><td class="muted">Roadmap</td></tr>`).join("")}
         </tbody></table>
       </div>
       <div class="card" style="margin-top:18px"><h2>Company defaults</h2><table class="t"><tbody>
@@ -87,7 +87,7 @@ Interested in trying it on your own certificates? Get in touch.`,
         <div class="card">
           <h2>Draft answers</h2><p class="sub">Generated from the business record. Character counts help you fit the form.</p>
           ${field("Company name", B.name)}
-          ${site ? field("Company website", site) : `<div class="field-label"><span>Company website</span></div><div class="callout">Blocked: domain not confirmed. Suggested <span class="mono">www.${esc(B.domain.suggestion)}</span> — register it, publish this site, then update <span class="mono">business.js</span>.</div>`}
+          ${site ? field("Company website", site) : `<div class="field-label"><span>Company website</span></div><div class="callout">Blocked: domain not confirmed. Suggested <span class="mono">www.${esc(B.domain.suggestion)}</span>. Register it, publish this site, then update <span class="mono">business.js</span>.</div>`}
           ${field("Product stage (select)", B.stage.activateSelection, null, esc(B.stage.rationale))}
           ${field("Industry", B.industry)}
           ${field("Company / product description", copy.activateDescription)}
@@ -98,7 +98,7 @@ Interested in trying it on your own certificates? Get in touch.`,
         <div class="grid" style="align-content:start">
           <div class="card"><h2>Consistency rules</h2><ul class="check-list">
             <li>Stage is “${esc(B.stage.activateSelection)}” everywhere</li>
-            <li>All AWS services described as planned — none deployed</li>
+            <li>All AWS services described as planned, none deployed</li>
             <li>No customers, revenue or users claimed</li>
             <li>Same positioning on website, LinkedIn and application</li>
           </ul></div>
@@ -135,12 +135,12 @@ Interested in trying it on your own certificates? Get in touch.`,
           ${field("Public URL", slug, null, B.linkedin.value ? "" : `Proposed, not verified. ${esc(B.linkedin.note)} Alternative: linkedin.com/company/${esc(B.linkedin.alternativeSlug)}.`)}
           ${field("Website", B.domain.value ? `https://www.${B.domain.value}` : `(add once ${B.domain.suggestion} is confirmed)`)}
           ${field("Industry", B.linkedinIndustry)}
-          ${field("Company size", B.companySize.value, null, "Suggested bracket — confirm actual team size.")}
+          ${field("Company size", B.companySize.value, null, "Suggested bracket. Confirm actual team size.")}
           ${field("Company type", B.companyType.value)}
           ${field("Tagline", copy.linkedinTagline, 120)}
           ${field("About (overview)", copy.linkedinAbout, 2000)}
           ${field("Specialties", copy.specialties.join(", "))}
-          ${field("Founded", String(B.foundingYear.value), null, "Default assumption — confirm.")}
+          ${field("Founded", String(B.foundingYear.value), null, "Default assumption. Please confirm.")}
         </div>
         <div class="grid" style="align-content:start">
           <div class="card"><h2>Logo for LinkedIn</h2><p class="sub">300 × 300 px recommended.</p><div style="width:120px;height:120px">${logoMark(false)}</div><button class="btn btn-ghost btn-sm" style="margin-top:12px" data-act="dl-logo">Download SVG</button></div>
@@ -157,7 +157,7 @@ Interested in trying it on your own certificates? Get in touch.`,
       <div class="grid g2">
         <div class="card"><h2>Colour</h2><div class="grid g2" style="margin-top:12px;gap:10px">${colors.map(([n, h, u]) => `<button class="sample-btn" data-copy="${h}" style="display:flex;gap:12px;align-items:center"><span style="width:38px;height:38px;border-radius:8px;background:${h};border:1px solid var(--rule)"></span><span><b style="font-weight:500">${n}</b><small class="mono">${h} · ${u}</small></span></button>`).join("")}</div></div>
         <div class="card"><h2>Typography</h2>
-          <p style="font:400 40px/1.05 var(--serif);margin:12px 0 4px">Instrument Serif</p><p class="muted" style="margin:0 0 14px;font-size:14px">Headlines, KPIs — editorial, document-like</p>
+          <p style="font:400 40px/1.05 var(--serif);margin:12px 0 4px">Instrument Serif</p><p class="muted" style="margin:0 0 14px;font-size:14px">Headlines and KPIs, editorial and document-like</p>
           <p style="font:500 20px var(--sans);margin:0 0 4px">IBM Plex Sans</p><p class="muted" style="margin:0 0 14px;font-size:14px">Interface and body copy</p>
           <p style="font:500 16px var(--mono);margin:0 0 4px">IBM Plex Mono</p><p class="muted" style="margin:0;font-size:14px">Values, lot numbers, labels</p>
         </div>

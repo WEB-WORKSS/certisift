@@ -49,7 +49,7 @@ window.CS = window.CS || {};
     return `<tr class="click" data-href="#/app/v/${v.id}">
       <td>${verdictBadge(v.verdict)}</td>
       <td><b style="font-weight:500">${esc(v.supplier || "Unknown supplier")}</b><div class="muted" style="font-size:13px">${esc(v.specName)}</div></td>
-      <td class="num">${esc(v.lot || "—")}</td>
+      <td class="num">${esc(v.lot || "N/A")}</td>
       <td class="num">${v.summary.fail ? `<span style="color:var(--fail)">${v.summary.fail} fail</span> ` : ""}${v.summary.warn ? `<span style="color:var(--hold)">${v.summary.warn} review</span> ` : ""}${v.summary.missing ? `${v.summary.missing} missing` : ""}${!v.summary.fail && !v.summary.warn && !v.summary.missing ? `<span style="color:var(--pass)">all pass</span>` : ""}</td>
       <td>${decisionText(v.decision)}</td>
       <td class="num">${fmtDate(v.createdAt)}</td>
@@ -57,7 +57,7 @@ window.CS = window.CS || {};
   }
   const vTable = (list) => list.length
     ? `<div class="table-wrap"><table class="t"><thead><tr><th>Verdict</th><th>Supplier / spec</th><th>Lot</th><th>Findings</th><th>Decision</th><th>Checked</th></tr></thead><tbody>${list.map(vRow).join("")}</tbody></table></div>`
-    : `<div class="empty"><h3>No certificates checked yet</h3><p>Verify your first certificate — or try one of the samples.</p><a class="btn btn-primary" href="#/app/verify">Verify a certificate</a></div>`;
+    : `<div class="empty"><h3>No certificates checked yet</h3><p>Verify your first certificate, or try one of the samples.</p><a class="btn btn-primary" href="#/app/verify">Verify a certificate</a></div>`;
 
   /* ---------------- Overview ---------------- */
   function overview() {
@@ -169,15 +169,15 @@ window.CS = window.CS || {};
       <div class="verdict ${v.verdict}"><div class="big">${verdictLabel[v.verdict].toUpperCase().split(" ")[0]}</div><div><h2>${head}</h2><p>${sub}</p></div></div>
       <div class="grid g4" style="margin-top:18px">
         <div class="card kpi"><div class="l">Supplier</div><div style="font-weight:500;margin-top:8px">${esc(v.supplier || "Not found")}</div>${v.supplier ? `<a class="d" href="#/app/suppliers/${encodeURIComponent(v.supplier)}">Supplier history →</a>` : ""}</div>
-        <div class="card kpi"><div class="l">Product · spec</div><div style="font-weight:500;margin-top:8px">${esc(v.product || "—")}</div><div class="d">${esc(v.specName)}</div></div>
-        <div class="card kpi"><div class="l">Lot</div><div class="mono" style="margin-top:8px">${esc(v.lot || "—")}</div><div class="d">Issued ${fmtDate(v.issued)}</div></div>
+        <div class="card kpi"><div class="l">Product · spec</div><div style="font-weight:500;margin-top:8px">${esc(v.product || "N/A")}</div><div class="d">${esc(v.specName)}</div></div>
+        <div class="card kpi"><div class="l">Lot</div><div class="mono" style="margin-top:8px">${esc(v.lot || "N/A")}</div><div class="d">Issued ${fmtDate(v.issued)}</div></div>
         <div class="card kpi"><div class="l">Shelf life</div><div style="margin-top:8px">${fmtDate(v.exp)}</div><div class="d">Made ${fmtDate(v.mfg)}</div></div>
       </div>
       <div class="grid g21" style="margin-top:18px">
         <div class="card">
           <h2>Results against specification</h2><p class="sub">Each value as extracted, compared with ${esc(v.specName)}.</p>
           <div class="table-wrap"><table class="t"><thead><tr><th>Status</th><th>Parameter</th><th>Result</th><th>Limit</th><th>Finding</th></tr></thead><tbody>
-            ${params.map((c) => `<tr><td><span class="badge ${c.status}">${statusLabel[c.status]}</span></td><td>${esc(c.label)}${c.method ? `<div class="source">${esc(c.method)}</div>` : ""}</td><td class="num">${c.value != null ? esc(c.value) + " " + esc(c.unit || "") : "—"}</td><td class="num">${esc(c.limit)}</td><td style="font-size:14px">${esc(c.detail)}${c.source ? `<div class="source" title="Source line">“${esc(c.source.length > 60 ? c.source.slice(0, 60) + "…" : c.source)}”</div>` : ""}</td></tr>`).join("")}
+            ${params.map((c) => `<tr><td><span class="badge ${c.status}">${statusLabel[c.status]}</span></td><td>${esc(c.label)}${c.method ? `<div class="source">${esc(c.method)}</div>` : ""}</td><td class="num">${c.value != null ? esc(c.value) + " " + esc(c.unit || "") : "N/A"}</td><td class="num">${esc(c.limit)}</td><td style="font-size:14px">${esc(c.detail)}${c.source ? `<div class="source" title="Source line">“${esc(c.source.length > 60 ? c.source.slice(0, 60) + "…" : c.source)}”</div>` : ""}</td></tr>`).join("")}
           </tbody></table></div>
           ${v.extras.length ? `<p class="muted" style="font-size:13.5px;margin:14px 0 0">Also on the certificate, not in this specification: ${v.extras.map(esc).join(", ")}.</p>` : ""}
         </div>
@@ -342,7 +342,7 @@ window.CS = window.CS || {};
   function suppliers() {
     const st = supplierStats();
     const body = st.length ? `<div class="card"><div class="table-wrap"><table class="t"><thead><tr><th>Supplier</th><th>Lots</th><th>First-pass accept</th><th>Rejects</th><th>Holds</th><th>Recurring issue</th><th>Last lot</th></tr></thead><tbody>
-      ${st.map((s) => { const pct = Math.round((s.accept / s.lots) * 100); return `<tr class="click" data-href="#/app/suppliers/${encodeURIComponent(s.name)}"><td><b style="font-weight:500">${esc(s.name)}</b><div class="muted" style="font-size:13px">${esc([...new Set(s.list.map((v) => v.specName))].join(", "))}</div></td><td class="num">${s.lots}</td><td style="min-width:160px"><div style="display:flex;gap:10px;align-items:center"><div class="bar" style="flex:1"><i style="width:${pct}%;${pct < 70 ? "background:var(--hold)" : ""}"></i></div><span class="mono" style="font-size:13px">${pct}%</span></div></td><td class="num">${s.rejects}</td><td class="num">${s.holds}</td><td style="font-size:14px">${s.top && s.top[1] > 1 ? `${esc(s.top[0])} <span class="pill">${s.top[1]}×</span>` : '<span class="muted">—</span>'}</td><td class="num">${fmtDate(s.last.issued || s.last.createdAt)}</td></tr>`; }).join("")}
+      ${st.map((s) => { const pct = Math.round((s.accept / s.lots) * 100); return `<tr class="click" data-href="#/app/suppliers/${encodeURIComponent(s.name)}"><td><b style="font-weight:500">${esc(s.name)}</b><div class="muted" style="font-size:13px">${esc([...new Set(s.list.map((v) => v.specName))].join(", "))}</div></td><td class="num">${s.lots}</td><td style="min-width:160px"><div style="display:flex;gap:10px;align-items:center"><div class="bar" style="flex:1"><i style="width:${pct}%;${pct < 70 ? "background:var(--hold)" : ""}"></i></div><span class="mono" style="font-size:13px">${pct}%</span></div></td><td class="num">${s.rejects}</td><td class="num">${s.holds}</td><td style="font-size:14px">${s.top && s.top[1] > 1 ? `${esc(s.top[0])} <span class="pill">${s.top[1]}×</span>` : '<span class="muted">None</span>'}</td><td class="num">${fmtDate(s.last.issued || s.last.createdAt)}</td></tr>`; }).join("")}
       </tbody></table></div></div>` : `<div class="card empty"><h3>No suppliers yet</h3><p>Suppliers appear automatically as you verify certificates.</p><a class="btn btn-primary" href="#/app/verify">Verify a certificate</a></div>`;
     return shell("suppliers", "Suppliers", body);
   }
@@ -369,7 +369,7 @@ window.CS = window.CS || {};
           <div id="trend" style="margin-top:14px"></div>
         </div>
         <div class="card"><h2>Findings by parameter</h2><p class="sub">Non-passing checks across all lots</p>
-          ${Object.keys(issues).length ? Object.entries(issues).sort((a, b) => b[1] - a[1]).map(([k, c]) => `<div class="viz-row" style="font-size:14px;padding:7px 0"><span>${esc(k)}</span><span class="pill">${c}×</span></div>`).join("") : '<p class="muted">No findings — every lot passed.</p>'}
+          ${Object.keys(issues).length ? Object.entries(issues).sort((a, b) => b[1] - a[1]).map(([k, c]) => `<div class="viz-row" style="font-size:14px;padding:7px 0"><span>${esc(k)}</span><span class="pill">${c}×</span></div>`).join("") : '<p class="muted">No findings. Every lot passed.</p>'}
         </div>
       </div>
       <div class="card" style="margin-top:18px"><h2 style="margin-bottom:10px">Lots</h2>${vTable(sorted(s.list))}</div>`;
@@ -395,9 +395,9 @@ window.CS = window.CS || {};
       <div class="grid g3">
         <div class="card"><h2>Verification log</h2><p class="sub">Every certificate, verdict, decision and finding as CSV for audits or spreadsheets.</p><button class="btn btn-primary btn-sm" data-act="csv">Download CSV</button></div>
         <div class="card"><h2>Supplier summary</h2><p class="sub">Accept rate, rejects and recurring issues per supplier, ready to print.</p><a class="btn btn-ghost btn-sm" href="#/app/report/suppliers">Open summary</a></div>
-        <div class="card"><h2>Lot reports</h2><p class="sub">A printable verification record for any single lot — open it from the list below.</p><span class="pill">${list.length} available</span></div>
+        <div class="card"><h2>Lot reports</h2><p class="sub">A printable verification record for any single lot. Open it from the list below.</p><span class="pill">${list.length} available</span></div>
       </div>
-      <div class="card" style="margin-top:18px"><h2 style="margin-bottom:10px">Lot reports</h2>${list.length ? `<div class="table-wrap"><table class="t"><thead><tr><th>Lot</th><th>Supplier</th><th>Verdict</th><th>Decision</th><th></th></tr></thead><tbody>${list.map((v) => `<tr><td class="num">${esc(v.lot || "—")}</td><td>${esc(v.supplier || "—")}</td><td>${verdictBadge(v.verdict)}</td><td>${decisionText(v.decision)}</td><td style="text-align:right"><a class="btn btn-ghost btn-sm" href="#/app/report/${v.id}">Open report</a></td></tr>`).join("")}</tbody></table></div>` : '<p class="muted">No verifications yet.</p>'}</div>`;
+      <div class="card" style="margin-top:18px"><h2 style="margin-bottom:10px">Lot reports</h2>${list.length ? `<div class="table-wrap"><table class="t"><thead><tr><th>Lot</th><th>Supplier</th><th>Verdict</th><th>Decision</th><th></th></tr></thead><tbody>${list.map((v) => `<tr><td class="num">${esc(v.lot || "N/A")}</td><td>${esc(v.supplier || "N/A")}</td><td>${verdictBadge(v.verdict)}</td><td>${decisionText(v.decision)}</td><td style="text-align:right"><a class="btn btn-ghost btn-sm" href="#/app/report/${v.id}">Open report</a></td></tr>`).join("")}</tbody></table></div>` : '<p class="muted">No verifications yet.</p>'}</div>`;
     return shell("reports", "Reports", body);
   }
 
@@ -406,8 +406,8 @@ window.CS = window.CS || {};
     if (id === "suppliers") {
       const st = supplierStats();
       const body = `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:14px">${logo("#/")}<div style="text-align:right" class="source">Supplier quality summary<br>${esc(ws.name)} · generated ${fmtDate(new Date().toISOString())}</div></div>
-        <table class="t"><thead><tr><th>Supplier</th><th>Lots</th><th>Accept</th><th>Holds</th><th>Rejects</th><th>Top recurring finding</th></tr></thead><tbody>${st.map((s) => `<tr><td>${esc(s.name)}</td><td class="num">${s.lots}</td><td class="num">${Math.round((s.accept / s.lots) * 100)}%</td><td class="num">${s.holds}</td><td class="num">${s.rejects}</td><td>${s.top ? `${esc(s.top[0])} (${s.top[1]}×)` : "—"}</td></tr>`).join("")}</tbody></table>
-        ${ws.sample ? '<p class="source" style="margin-top:14px">Sample workspace — fictional suppliers and results.</p>' : ""}</div>`;
+        <table class="t"><thead><tr><th>Supplier</th><th>Lots</th><th>Accept</th><th>Holds</th><th>Rejects</th><th>Top recurring finding</th></tr></thead><tbody>${st.map((s) => `<tr><td>${esc(s.name)}</td><td class="num">${s.lots}</td><td class="num">${Math.round((s.accept / s.lots) * 100)}%</td><td class="num">${s.holds}</td><td class="num">${s.rejects}</td><td>${s.top ? `${esc(s.top[0])} (${s.top[1]}×)` : "N/A"}</td></tr>`).join("")}</tbody></table>
+        ${ws.sample ? '<p class="source" style="margin-top:14px">Sample workspace with fictional suppliers and results.</p>' : ""}</div>`;
       return shell("reports", "Supplier summary", body, `<button class="btn btn-primary btn-sm" data-act="print">Print / save PDF</button>`);
     }
     const v = ws.verifications.find((x) => x.id === id);
@@ -415,16 +415,16 @@ window.CS = window.CS || {};
     const body = `<div class="card" style="max-width:900px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:16px">${logo("#/")}<div style="text-align:right" class="source">Incoming material verification record<br>Ref ${esc(v.id.toUpperCase())}</div></div>
       <div class="grid g2" style="font-size:14.5px;gap:4px 24px">
-        <div><span class="muted">Supplier:</span> ${esc(v.supplier || "—")}</div><div><span class="muted">Specification:</span> ${esc(v.specName)}</div>
-        <div><span class="muted">Product:</span> ${esc(v.product || "—")}</div><div><span class="muted">Lot:</span> <span class="mono">${esc(v.lot || "—")}</span></div>
+        <div><span class="muted">Supplier:</span> ${esc(v.supplier || "N/A")}</div><div><span class="muted">Specification:</span> ${esc(v.specName)}</div>
+        <div><span class="muted">Product:</span> ${esc(v.product || "N/A")}</div><div><span class="muted">Lot:</span> <span class="mono">${esc(v.lot || "N/A")}</span></div>
         <div><span class="muted">Certificate issued:</span> ${fmtDate(v.issued)}</div><div><span class="muted">Best before:</span> ${fmtDate(v.exp)}</div>
         <div><span class="muted">Signed by:</span> ${esc(v.signedBy || "Not stated")}</div><div><span class="muted">Checked:</span> ${fmtDate(v.createdAt)}</div>
       </div>
-      <div class="verdict ${v.verdict}" style="margin:18px 0"><div class="big">${verdictLabel[v.verdict].toUpperCase().split(" ")[0]}</div><div><h2 style="font-size:20px">System recommendation: ${verdictLabel[v.verdict]}</h2><p>Decision: ${v.decision ? `${decisionLabel[v.decision.status]} on ${fmtDate(v.decision.at)}${v.decision.note ? ` — “${esc(v.decision.note)}”` : ""}` : "Not yet recorded"}</p></div></div>
+      <div class="verdict ${v.verdict}" style="margin:18px 0"><div class="big">${verdictLabel[v.verdict].toUpperCase().split(" ")[0]}</div><div><h2 style="font-size:20px">System recommendation: ${verdictLabel[v.verdict]}</h2><p>Decision: ${v.decision ? `${decisionLabel[v.decision.status]} on ${fmtDate(v.decision.at)}${v.decision.note ? `: “${esc(v.decision.note)}”` : ""}` : "Not yet recorded"}</p></div></div>
       <table class="t"><thead><tr><th>Check</th><th>Result</th><th>Requirement</th><th>Status</th><th>Comment</th></tr></thead><tbody>
-        ${v.checks.map((c) => `<tr><td>${esc(c.label)}</td><td class="num">${c.kind === "param" ? (c.value != null ? esc(c.value + " " + (c.unit || "")) : "—") : ""}</td><td class="num">${esc(c.limit || "")}</td><td><span class="badge ${c.status}">${statusLabel[c.status]}</span></td><td style="font-size:13.5px">${esc(c.detail)}</td></tr>`).join("")}
+        ${v.checks.map((c) => `<tr><td>${esc(c.label)}</td><td class="num">${c.kind === "param" ? (c.value != null ? esc(c.value + " " + (c.unit || "")) : "N/A") : ""}</td><td class="num">${esc(c.limit || "")}</td><td><span class="badge ${c.status}">${statusLabel[c.status]}</span></td><td style="font-size:13.5px">${esc(c.detail)}</td></tr>`).join("")}
       </tbody></table>
-      <p class="source" style="margin-top:16px">Prepared by ${esc(u.name)} in ${esc(ws.name)} using CertiSift. Automated checks support, and do not replace, the reviewer's decision.${ws.sample ? " Sample data — fictional supplier." : ""}</p>
+      <p class="source" style="margin-top:16px">Prepared by ${esc(u.name)} in ${esc(ws.name)} using CertiSift. Automated checks support, and do not replace, the reviewer's decision.${ws.sample ? " Sample data with a fictional supplier." : ""}</p>
     </div>`;
     return shell("reports", "Lot report", body, `<a class="btn btn-ghost btn-sm" href="#/app/v/${v.id}">Back to verification</a><button class="btn btn-primary btn-sm" data-act="print">Print / save PDF</button>`);
   }

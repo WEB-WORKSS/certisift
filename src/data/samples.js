@@ -80,7 +80,7 @@ CS.buildCoa = function (h, rows) {
 CS.sampleDocs = [
   {
     id: "s1",
-    title: "Northfield Milling — Wheat flour, compliant",
+    title: "Northfield Milling: Wheat flour, compliant",
     hint: "Expected: Accept",
     specId: "spec-flour-550",
     text: CS.buildCoa(
@@ -100,7 +100,7 @@ CS.sampleDocs = [
   },
   {
     id: "s2",
-    title: "Arden Grain — Wheat flour, aflatoxin over limit",
+    title: "Arden Grain: Wheat flour, aflatoxin over limit",
     hint: "Expected: Reject",
     specId: "spec-flour-550",
     text: CS.buildCoa(
@@ -120,7 +120,7 @@ CS.sampleDocs = [
   },
   {
     id: "s3",
-    title: "Halvorsen Dairy — Milk powder, incomplete certificate",
+    title: "Halvorsen Dairy: Milk powder, incomplete certificate",
     hint: "Expected: Hold (missing test, no signature)",
     specId: "spec-smp",
     text: CS.buildCoa(
@@ -138,7 +138,7 @@ CS.sampleDocs = [
   },
   {
     id: "s4",
-    title: "Northfield Milling — Wheat flour, unusual protein",
+    title: "Northfield Milling: Wheat flour, unusual protein",
     hint: "Expected: Hold (outlier vs supplier history)",
     specId: "spec-flour-550",
     text: CS.buildCoa(
@@ -158,7 +158,7 @@ CS.sampleDocs = [
   },
   {
     id: "s5",
-    title: "Meridian Cocoa — Cocoa powder, values copied from last lot",
+    title: "Meridian Cocoa: Cocoa powder, values copied from last lot",
     hint: "Expected: Hold (possible copied certificate)",
     specId: "spec-cocoa",
     text: CS.buildCoa(

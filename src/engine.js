@@ -217,7 +217,7 @@ window.CS = window.CS || {};
     const doc = (label, ok, detail, failStatus) => checks.push({ kind: "document", label, status: ok ? "pass" : failStatus || "warn", detail });
     doc("Supplier identified", !!h.supplier, h.supplier || "Supplier name not found.");
     doc("Product identified", !!h.product, h.product || "Product name not found.");
-    doc("Lot / batch number", !!h.lot, h.lot || "Lot or batch number missing — traceability gap.");
+    doc("Lot / batch number", !!h.lot, h.lot || "Lot or batch number missing, so the lot cannot be traced.");
     doc("Authorised signature", !!h.signedBy, h.signedBy || "No approver or signatory stated.");
     const issued = parseDate(h.issued), mfg = parseDate(h.mfg), exp = parseDate(h.exp);
     doc("Issue date", !!issued, issued ? iso(issued) : "Certificate issue date missing.");

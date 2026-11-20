@@ -42,7 +42,7 @@
     } else {
       view = "home";
       if (lastView !== "home" || path !== "s") { html = CS.site.home(); bind = CS.site.bindHome; }
-      setMeta(`${B.name} — Supplier CoA verification for food manufacturers`, B.shortPitch);
+      setMeta(`${B.name} | Supplier CoA verification for food manufacturers`, B.shortPitch);
     }
 
     if (html !== undefined) {

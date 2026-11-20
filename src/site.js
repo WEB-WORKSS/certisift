@@ -1,4 +1,4 @@
-/* Public website views — content derived from CS.business */
+/* Public website views: content derived from CS.business */
 window.CS = window.CS || {};
 
 (function () {
@@ -95,7 +95,7 @@ window.CS = window.CS || {};
     extract: `<div class="viz"><div class="viz-row"><span class="muted">supplier</span><span>Northfield Milling Co.</span></div><div class="viz-row"><span class="muted">lot</span><span>NFM-26311</span></div><div class="viz-row"><span class="muted">tpc</span><span>3.8 × 10⁴ → 38,000 cfu/g</span></div><div class="viz-row"><span class="muted">salmonella</span><span>Not detected /25 g</span></div></div>`,
     match: `<div class="viz"><div class="viz-row"><span><i class="dot pass"></i>Protein</span><span>12.1 · 11.0–13.0 %</span></div><div class="viz-row"><span><i class="dot warn"></i>Moisture</span><span>14.4 · ≤ 14.5 %</span></div><div class="viz-row"><span><i class="dot fail"></i>Aflatoxin B1</span><span>3.4 · ≤ 2.0 µg/kg</span></div><div class="viz-row"><span><i class="dot missing"></i>Salmonella</span><span>not reported</span></div></div>`,
     anomaly: `<div class="viz"><svg viewBox="0 0 260 70" style="width:100%;height:70px"><line x1="0" x2="260" y1="12" y2="12" stroke="#b5391f" stroke-dasharray="4 4"/><polyline points="10,52 45,49 80,53 115,50 150,51 185,48 220,22" fill="none" stroke="#0d6e5c" stroke-width="2"/>${[[10, 52], [45, 49], [80, 53], [115, 50], [150, 51], [185, 48]].map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#0d6e5c"/>`).join("")}<circle cx="220" cy="22" r="5" fill="#b9770e"/></svg><div class="viz-row"><span><i class="dot warn"></i>Protein +7σ vs. last 7 lots</span><span>still in spec</span></div></div>`,
-    reports: `<div class="viz"><div class="viz-row"><b>Verification record</b><span>Lot HDI-SMP-0942</span></div><div class="viz-row"><span>Checks</span><span>12 pass · 1 review · 1 missing</span></div><div class="viz-row"><span>Decision</span><span>On hold — awaiting Salmonella result</span></div><div class="viz-row"><span>Reviewer</span><span>QA, 24 Oct 2026</span></div></div>`,
+    reports: `<div class="viz"><div class="viz-row"><b>Verification record</b><span>Lot HDI-SMP-0942</span></div><div class="viz-row"><span>Checks</span><span>12 pass · 1 review · 1 missing</span></div><div class="viz-row"><span>Decision</span><span>On hold, awaiting Salmonella result</span></div><div class="viz-row"><span>Reviewer</span><span>QA, 24 Oct 2026</span></div></div>`,
     suppliers: `<div class="viz">${[["Northfield Milling", 100], ["Halvorsen Dairy", 86], ["Arden Grain", 63]].map(([n, p]) => `<div class="viz-row" style="align-items:center"><span style="flex:0 0 46%">${n}</span><span class="bar" style="flex:1"><i style="width:${p}%;${p < 70 ? "background:var(--hold)" : ""}"></i></span><span style="width:40px;text-align:right">${p}%</span></div>`).join("")}<div class="viz-row"><span class="muted">Recurring</span><span>Arden · moisture (2×)</span></div></div>`,
     workflow: `<div class="viz" style="display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span class="badge pass">Release</span><span class="badge hold">Hold</span><span class="badge reject">Reject</span><div style="flex-basis:100%;margin-top:8px" class="muted">“Held pending Salmonella result from supplier lab.”</div></div>`,
   };
@@ -166,7 +166,7 @@ window.CS = window.CS || {};
           <div>
             <span class="status-chip"><i></i>${esc(B.stage.value === "Ideating/building initial product" ? "Building the MVP · working demo available" : B.stage.value)}</span>
             <h1>Every supplier certificate, <span class="hl">checked against <em>your</em> spec</span> before the lot is released.</h1>
-            <p class="lede">CertiSift reads Certificates of Analysis, compares every result with your own specification and flags out-of-spec, missing and suspicious values — so food manufacturers release incoming materials on evidence, not a skim-read PDF.</p>
+            <p class="lede">CertiSift reads Certificates of Analysis, compares every result with your own specification and flags out-of-spec, missing and suspicious values, so food manufacturers release incoming materials on evidence, not a skim-read PDF.</p>
             <div class="hero-ctas">
               <button class="btn btn-primary" data-act="sample-verify">Try it on a sample certificate</button>
               <a class="btn btn-ghost" href="#/s/how">See how it works</a>
@@ -178,7 +178,7 @@ window.CS = window.CS || {};
       </section>
 
       <div class="strip"><div class="wrap strip-grid">
-        <div class="strip-item"><div class="k">4 limit types</div><p>Ranges, minimums, maximums and pathogen absence — per parameter.</p></div>
+        <div class="strip-item"><div class="k">4 limit types</div><p>Ranges, minimums, maximums and pathogen absence for every parameter.</p></div>
         <div class="strip-item"><div class="k">History-aware</div><p>Outliers and copied values flagged against each supplier's previous lots.</p></div>
         <div class="strip-item"><div class="k">One record per lot</div><p>Every check, verdict and reviewer note in a printable report.</p></div>
         <div class="strip-item"><div class="k">Your specs</div><p>Checks run on your specifications and your suppliers' naming.</p></div>
@@ -193,7 +193,7 @@ window.CS = window.CS || {};
           <div class="ledger">
             <div><h3>Today · manual review</h3><ol>${B.problem.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ol></div>
             <div><h3>With CertiSift</h3><ol>
-              <li>The certificate is parsed the moment it arrives — supplier, lot, dates and every result with its unit.</li>
+              <li>The certificate is parsed the moment it arrives: supplier, lot, dates and every result with its unit.</li>
               <li>Different parameter names and number formats are normalised to your specification.</li>
               <li>Each result is checked against your limits, including near-limit and missing tests.</li>
               <li>Results are compared with the supplier's history to catch outliers and copied values.</li>
@@ -213,7 +213,7 @@ window.CS = window.CS || {};
         <div class="wrap">
           <div class="sec-head">
             <div><span class="eyebrow">Product</span><h2 class="title">From PDF pile to <em>release decision</em>.</h2></div>
-            <p class="lede">Six capabilities that work together on every incoming lot — from reading the certificate to tracking the supplier over time.</p>
+            <p class="lede">Six capabilities that work together on every incoming lot, from reading the certificate to tracking the supplier over time.</p>
           </div>
           <div class="features">
             ${featureCard(f[0], true)}${featureCard(f[1], true)}

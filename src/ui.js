@@ -34,7 +34,7 @@ window.CS = window.CS || {};
   const statusLabel = { pass: "Pass", warn: "Review", fail: "Out of spec", missing: "Missing" };
   const decisionLabel = { released: "Released", "on-hold": "On hold", rejected: "Rejected" };
 
-  const fmtDate = (s) => { if (!s) return "—"; const d = new Date(s); return isNaN(d) ? s : d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); };
+  const fmtDate = (s) => { if (!s) return "N/A"; const d = new Date(s); return isNaN(d) ? s : d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); };
 
   let toastT;
   function toast(msg) {
