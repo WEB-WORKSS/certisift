@@ -42,7 +42,7 @@ The Activate Center's **Readiness** tab lists open items. The current blockers a
 
 1. Register and confirm the domain (suggested `certisift.com`), then set `domain.value`.
 2. Set up the official business email and connect the contact form to it. The form currently saves only to the browser.
-3. Add the founder's LinkedIn profile URL to `founders` (name and title are already set; it appears in the Founder section).
+3. Add the founder's LinkedIn profile URL to `founders` (name and title are already set; it appears in the Team section).
 4. Create the LinkedIn company page and set `linkedin.value`.
 5. Get an Activate Provider Organizational ID for the Portfolio package, or apply to Activate Founders instead.
 6. Run a trademark check (a similarly named "CertiSwift" exists).

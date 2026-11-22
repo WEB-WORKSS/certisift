@@ -11,7 +11,7 @@ window.CS = window.CS || {};
     ["how", "How It Works"],
     ["technology", "Technology"],
     ["pricing", "Pricing"],
-    ...(B.founders.length ? [["founder", "Founder"]] : []),
+    ...(B.founders.length ? [["team", "Team"]] : []),
     ["contact", "Contact"],
   ];
 
@@ -303,9 +303,9 @@ window.CS = window.CS || {};
         </div>
       </section>
 
-      ${B.founders.length ? `<section class="block" id="founder" style="padding-top:0"><div class="wrap">${B.founders.map((p) => `
+      ${B.founders.length ? `<section class="block" id="team" style="padding-top:0"><div class="wrap">${B.founders.map((p) => `
         <figure class="founder">
-          <span class="eyebrow">Founder</span>
+          <span class="eyebrow">Team</span>
           ${p.quote ? `<blockquote>“${esc(p.quote)}”</blockquote>` : ""}
           <figcaption>
             <div class="mono-badge" aria-hidden="true">${esc(p.name.split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join(""))}</div>

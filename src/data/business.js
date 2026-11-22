@@ -39,7 +39,7 @@ CS.business = {
   founders: [
     {
       name: "Abiola Tijani Babatunde",
-      title: "Founder",
+      title: "CEO",
       linkedin: null,
       status: "verified",
       // Drafted for the founder's approval. Edit to his own words before publishing.
@@ -182,7 +182,7 @@ CS.verificationItems = function () {
   const push = (label, ok, detail, blocker) => items.push({ label, ok, detail, blocker: !!blocker });
   push("Company domain", !!b.domain.value, b.domain.value || `Not confirmed. Suggested: ${b.domain.suggestion}`, true);
   push("Official business email", !!b.email.value, b.email.value || "Not supplied. Needed for website contact and AWS account.", true);
-  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name}, ${f.title}`).join("; ") : "Not supplied. Founder section is hidden on the website.", true);
+  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name}, ${f.title}`).join("; ") : "Not supplied. Team section is hidden on the website.", true);
   if (b.founders.length) {
     const noLi = b.founders.filter((f) => !f.linkedin);
     push("Founder LinkedIn profile", noLi.length === 0, noLi.length ? `Not supplied for ${noLi.map((f) => f.name).join(", ")}. Recommended for AWS Activate credibility.` : "Linked");
