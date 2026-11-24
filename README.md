@@ -21,7 +21,6 @@ Open http://localhost:4317. No build step and no dependencies. Opening `index.ht
 | `src/store.js` | Local accounts and workspaces (browser localStorage) |
 | `src/site.js` | Public website, sign-in/up, legal pages |
 | `src/app.js` | Product: overview, verify, verifications, specifications, suppliers, reports, profile |
-| `src/center.js` | Activate Center: readiness, business record, AWS Activate drafts, architecture, LinkedIn kit, brand kit, contact requests |
 | `src/main.js` | Hash router, global actions, SEO metadata, JSON-LD |
 
 ## Product truth (stage: Ideating/building initial product)

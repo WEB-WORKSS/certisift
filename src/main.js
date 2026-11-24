@@ -25,11 +25,11 @@
       const map = {
         "": [a.overview], verify: [a.verify, a.bindVerify], verifications: [a.verifications, a.bindVerifications], v: [() => a.detail(id), (r) => a.bindDetail(r, id)],
         specs: id ? [() => a.specEditor(id), (r) => a.bindSpecEditor(r, id)] : [a.specs], suppliers: id ? [() => a.supplierDetail(decodeURIComponent(id)), a.bindSupplier] : [a.suppliers],
-        reports: [a.reports], report: [() => a.report(id)], profile: [a.profile, a.bindProfile], center: [() => CS.center.center(id), CS.center.bindCenter],
+        reports: [a.reports], report: [() => a.report(id)], profile: [a.profile, a.bindProfile],
       };
       const r = map[sub || ""] || map[""];
       html = r[0](); bind = r[1];
-      const titles = { "": "Overview", verify: "Verify certificate", verifications: "Verifications", v: "Verification", specs: "Specifications", suppliers: "Suppliers", reports: "Reports", report: "Report", profile: "Profile", center: "Activate Center" };
+      const titles = { "": "Overview", verify: "Verify certificate", verifications: "Verifications", v: "Verification", specs: "Specifications", suppliers: "Suppliers", reports: "Reports", report: "Report", profile: "Profile" };
       setMeta(`${titles[sub || ""] || "Workspace"} · ${B.name}`, B.shortPitch);
       view = "app/" + (sub || "");
     } else if (path === "signin" || path === "signup") {

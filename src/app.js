@@ -23,7 +23,6 @@ window.CS = window.CS || {};
         ${logo("#/", true)}
         <nav aria-label="Workspace">${NAV.map(link).join("")}
           <div class="grp">Company</div>
-          ${link(["center", "Activate Center", "rocket"])}
           ${link(["profile", "Profile", "user"])}
           <a href="#/">${icon("globe")}Public website</a>
         </nav>
