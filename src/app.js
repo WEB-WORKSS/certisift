@@ -20,19 +20,20 @@ window.CS = window.CS || {};
     const link = ([p, l, ic]) => `<a href="#/app${p ? "/" + p : ""}" class="${active === p ? "active" : ""}">${icon(ic)}${l}</a>`;
     return `<div class="app">
       <aside class="side" id="side">
-        ${logo("#/", true)}
+        ${logo("./", true)}
         <nav aria-label="Workspace">${NAV.map(link).join("")}
-          <div class="grp">Company</div>
-          ${link(["profile", "Profile", "user"])}
-          <a href="#/">${icon("globe")}Public website</a>
+          <div class="grp">Demo</div>
+          ${link(["profile", "Settings", "user"])}
+          <a href="./">${icon("globe")}Public website</a>
+          <a href="contact">${icon("rocket")}Request early access</a>
         </nav>
-        <div class="foot"><b>${esc(ws.name)}</b>${esc(u.email === CS.store.SAMPLE_EMAIL ? "Sample data · fictional suppliers" : u.email)}</div>
+        <div class="foot"><b>${esc(ws.name)}</b>Live demo · fictional suppliers · saved in this browser only</div>
       </aside>
       <div class="main">
         <div class="topbar">
           <button class="app-toggle" data-act="side" aria-label="Open navigation">${icon("menu")}</button>
           <h1>${title}</h1>
-          ${ws.sample ? '<span class="badge sample">Sample workspace</span>' : ""}
+          <span class="badge sample">Demo · Sample data</span>
           <div class="right">${actions}</div>
         </div>
         <div class="page">${body}</div>
@@ -404,7 +405,7 @@ window.CS = window.CS || {};
     const ws = CS.store.ws(); const u = CS.store.user();
     if (id === "suppliers") {
       const st = supplierStats();
-      const body = `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:14px">${logo("#/")}<div style="text-align:right" class="source">Supplier quality summary<br>${esc(ws.name)} · generated ${fmtDate(new Date().toISOString())}</div></div>
+      const body = `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:14px">${logo("./")}<div style="text-align:right" class="source">Supplier quality summary<br>${esc(ws.name)} · generated ${fmtDate(new Date().toISOString())}</div></div>
         <table class="t"><thead><tr><th>Supplier</th><th>Lots</th><th>Accept</th><th>Holds</th><th>Rejects</th><th>Top recurring finding</th></tr></thead><tbody>${st.map((s) => `<tr><td>${esc(s.name)}</td><td class="num">${s.lots}</td><td class="num">${Math.round((s.accept / s.lots) * 100)}%</td><td class="num">${s.holds}</td><td class="num">${s.rejects}</td><td>${s.top ? `${esc(s.top[0])} (${s.top[1]}×)` : "N/A"}</td></tr>`).join("")}</tbody></table>
         ${ws.sample ? '<p class="source" style="margin-top:14px">Sample workspace with fictional suppliers and results.</p>' : ""}</div>`;
       return shell("reports", "Supplier summary", body, `<button class="btn btn-primary btn-sm" data-act="print">Print / save PDF</button>`);
@@ -412,7 +413,7 @@ window.CS = window.CS || {};
     const v = ws.verifications.find((x) => x.id === id);
     if (!v) return shell("reports", "Not found", `<div class="card empty"><h3>Report not found</h3></div>`);
     const body = `<div class="card" style="max-width:900px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:16px">${logo("#/")}<div style="text-align:right" class="source">Incoming material verification record<br>Ref ${esc(v.id.toUpperCase())}</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:16px">${logo("./")}<div style="text-align:right" class="source">Incoming material verification record<br>Ref ${esc(v.id.toUpperCase())}</div></div>
       <div class="grid g2" style="font-size:14.5px;gap:4px 24px">
         <div><span class="muted">Supplier:</span> ${esc(v.supplier || "N/A")}</div><div><span class="muted">Specification:</span> ${esc(v.specName)}</div>
         <div><span class="muted">Product:</span> ${esc(v.product || "N/A")}</div><div><span class="muted">Lot:</span> <span class="mono">${esc(v.lot || "N/A")}</span></div>
@@ -430,32 +431,24 @@ window.CS = window.CS || {};
 
   /* ---------------- Profile ---------------- */
   function profile() {
-    const u = CS.store.user(); const ws = CS.store.ws(); const sample = CS.store.isSample();
+    const ws = CS.store.ws();
     const body = `<div class="grid g2">
-      <div class="card"><h2>Profile</h2><p class="sub">${sample ? "The sample workspace uses a shared demo profile." : "Stored in this browser."}</p>
-        <form class="form" id="profile-form">
-          <label class="f">Name<input name="name" value="${esc(u.name)}" ${sample ? "disabled" : ""}></label>
-          <label class="f">Workspace name<input name="ws" value="${esc(ws.name)}" ${sample ? "disabled" : ""}></label>
-          <label class="f">Email<input value="${esc(u.email)}" disabled></label>
-          ${sample ? "" : '<button class="btn btn-primary btn-sm" type="submit" style="justify-self:start">Save changes</button>'}
-        </form>
+      <div class="card"><h2>About this demo</h2><p class="sub">There are no accounts in the demo.</p>
+        <p style="margin:0 0 10px">Every supplier, certificate and result here is fictional sample data, and every change you make is stored only in this browser. In production, sign-in, roles and records would be handled by the AWS services described on the <a href="technology">Technology</a> page.</p>
+        <a class="btn btn-primary btn-sm" href="contact">Request a pilot on your own certificates</a>
       </div>
-      <div class="card"><h2>Workspace data</h2><p class="sub">${ws.verifications.length} verifications · ${ws.specs.length} specifications</p>
+      <div class="card"><h2>Demo data</h2><p class="sub">${ws.verifications.length} verifications · ${ws.specs.length} specifications</p>
         <div style="display:grid;gap:10px;justify-items:start">
-          <button class="btn btn-ghost btn-sm" data-act="export-json">Export workspace (JSON)</button>
-          ${sample ? '<button class="btn btn-ghost btn-sm" data-act="reset-sample">Reset sample workspace</button>' : '<button class="btn btn-ghost btn-sm" data-act="delete-account" style="color:var(--fail)">Delete account and workspace</button>'}
-          <button class="btn btn-primary btn-sm" data-act="signout">${icon("out").replace("<svg", '<svg width="16" height="16"')} Sign out</button>
+          <button class="btn btn-ghost btn-sm" data-act="export-json">Export demo data (JSON)</button>
+          <button class="btn btn-ghost btn-sm" data-act="reset-sample">Reset demo data</button>
         </div>
       </div></div>`;
-    return shell("profile", "Profile", body);
+    return shell("profile", "Settings", body);
   }
   function bindProfile(root) {
-    const f = root.querySelector("#profile-form");
-    f.addEventListener("submit", (e) => { e.preventDefault(); const d = Object.fromEntries(new FormData(f)); CS.store.updateUser({ name: d.name }); const ws = CS.store.ws(); ws.name = d.ws || ws.name; CS.store.saveWs(ws); toast("Profile saved"); CS.render(); });
     const on = (a, fn) => { const b = root.querySelector(`[data-act="${a}"]`); if (b) b.addEventListener("click", fn); };
-    on("export-json", () => download("certisift-workspace.json", JSON.stringify(CS.store.ws(), null, 2), "application/json"));
-    on("reset-sample", () => { if (confirm("Reset the sample workspace to its original data?")) { CS.store.resetSample(); toast("Sample workspace reset"); CS.render(); } });
-    on("delete-account", () => { if (confirm("Delete your account and all workspace data from this browser? This cannot be undone.")) { CS.store.deleteAccount(); location.hash = "#/"; } });
+    on("export-json", () => download("certisift-demo.json", JSON.stringify(CS.store.ws(), null, 2), "application/json"));
+    on("reset-sample", () => { if (confirm("Reset the demo to its original sample data?")) { CS.store.resetSample(); toast("Demo data reset"); CS.render(); } });
   }
 
   CS.app = { overview, verify, bindVerify, detail, bindDetail, verifications, bindVerifications, exportCsv, specs, specEditor, bindSpecEditor, suppliers, supplierDetail, bindSupplier, reports, report, profile, bindProfile, shell };

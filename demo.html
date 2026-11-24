@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live demo | CertiSift</title>
+  <meta name="description" content="Try CertiSift on fictional supplier certificates: extraction, specification matching, anomaly checks, supplier monitoring and lot reports. Runs in your browser; nothing is sent to a server.">
+  <link rel="canonical" href="https://www.certisift.site/demo">
+  <meta name="theme-color" content="#12211f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CertiSift">
+  <meta property="og:title" content="Live demo | CertiSift">
+  <meta property="og:description" content="Try CertiSift on fictional supplier certificates. Runs in your browser.">
+  <meta property="og:url" content="https://www.certisift.site/demo">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to content</a>
+  <div class="demo-banner" role="note"><b>Live demo · Sample data</b> · Runs in your browser — nothing is sent to a server. Suppliers, lots and results are fictional. <a href="contact">Request a pilot on your own certificates →</a></div>
+  <div id="root"><noscript><p style="padding:40px;font-family:sans-serif">The CertiSift live demo needs JavaScript. You can read about the product at <a href="./">certisift.site</a>.</p></noscript></div>
+  <script src="src/data/business.js"></script>
+  <script src="src/data/samples.js"></script>
+  <script src="src/engine.js"></script>
+  <script src="src/store.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/app.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>

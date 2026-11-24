@@ -1,4 +1,4 @@
-/* Local persistence. Accounts and workspaces live in this browser's localStorage only. */
+/* Live demo persistence. The sample workspace lives in this browser's localStorage only; there are no accounts. */
 window.CS = window.CS || {};
 
 (function () {
@@ -9,16 +9,6 @@ window.CS = window.CS || {};
   const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
   const clone = (o) => JSON.parse(JSON.stringify(o));
   const SAMPLE_EMAIL = "sample@workspace.local";
-
-  async function hash(pw) {
-    try {
-      if (crypto && crypto.subtle) {
-        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("certisift|" + pw));
-        return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
-      }
-    } catch {}
-    let h = 2166136261; for (const c of "certisift|" + pw) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return "f" + (h >>> 0).toString(16);
-  }
 
   function seedSample() {
     const specs = clone(CS.sampleSpecs);
@@ -42,21 +32,6 @@ window.CS = window.CS || {};
     session() { return get("session", null); },
     user() { const s = this.session(); return s ? (get("users", {})[s] || null) : null; },
     isSample() { return this.session() === SAMPLE_EMAIL; },
-    async signUp({ name, company, email, password }) {
-      email = email.trim().toLowerCase();
-      const users = get("users", {});
-      if (users[email]) throw new Error("An account with this email already exists in this browser.");
-      users[email] = { name: name.trim(), company: company.trim(), email, pw: await hash(password), createdAt: new Date().toISOString() };
-      set("users", users);
-      set("ws:" + email, { name: company.trim() || name.trim(), sample: false, createdAt: new Date().toISOString(), specs: clone(CS.sampleSpecs), verifications: [] });
-      set("session", email);
-    },
-    async signIn(email, password) {
-      email = email.trim().toLowerCase();
-      const u = get("users", {})[email];
-      if (!u || u.pw !== (await hash(password))) throw new Error("Email or password is incorrect.");
-      set("session", email);
-    },
     enterSample() {
       const users = get("users", {});
       if (!users[SAMPLE_EMAIL]) { users[SAMPLE_EMAIL] = { name: "Sample reviewer", company: "Sample workspace", email: SAMPLE_EMAIL, pw: null, createdAt: new Date().toISOString() }; set("users", users); }
@@ -64,9 +39,6 @@ window.CS = window.CS || {};
       set("session", SAMPLE_EMAIL);
     },
     resetSample() { set("ws:" + SAMPLE_EMAIL, seedSample()); },
-    signOut() { del("session"); },
-    updateUser(patch) { const users = get("users", {}); const s = this.session(); users[s] = { ...users[s], ...patch }; set("users", users); },
-    deleteAccount() { const s = this.session(); const users = get("users", {}); delete users[s]; set("users", users); del("ws:" + s); del("session"); },
     ws() { const s = this.session(); return s ? get("ws:" + s, null) : null; },
     saveWs(ws) { set("ws:" + this.session(), ws); },
     addVerification(rec) { const ws = this.ws(); rec.id = uid(); rec.createdAt = new Date().toISOString(); ws.verifications.push(rec); this.saveWs(ws); return rec; },
@@ -74,9 +46,6 @@ window.CS = window.CS || {};
     deleteVerification(id) { const ws = this.ws(); ws.verifications = ws.verifications.filter((v) => v.id !== id); this.saveWs(ws); },
     saveSpec(spec) { const ws = this.ws(); const i = ws.specs.findIndex((s) => s.id === spec.id); if (i >= 0) ws.specs[i] = spec; else ws.specs.push(spec); this.saveWs(ws); },
     deleteSpec(id) { const ws = this.ws(); ws.specs = ws.specs.filter((s) => s.id !== id); this.saveWs(ws); },
-    inbox() { return get("inbox", []); },
-    addInbox(msg) { const list = get("inbox", []); list.unshift({ id: uid(), at: new Date().toISOString(), ...msg }); set("inbox", list); },
-    clearInbox() { set("inbox", []); },
   };
   CS.store = store;
 })();

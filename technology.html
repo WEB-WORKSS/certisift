@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How we use Amazon Web Services | CertiSift</title>
+  <meta name="description" content="CertiSift&#39;s proposed AWS architecture: Amazon Textract, Amazon Bedrock, AWS Lambda, AWS Step Functions, Amazon S3, Amazon DynamoDB, API Gateway, Cognito, AWS KMS and CloudWatch.">
+  <link rel="canonical" href="https://www.certisift.site/technology">
+  <meta name="theme-color" content="#12211f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CertiSift">
+  <meta property="og:title" content="How we use Amazon Web Services | CertiSift">
+  <meta property="og:description" content="CertiSift&#39;s proposed AWS architecture: Amazon Textract, Amazon Bedrock, AWS Lambda, AWS Step Functions, Amazon S3, Amazon DynamoDB, API Gateway, Cognito, AWS KMS and CloudWatch.">
+  <meta property="og:url" content="https://www.certisift.site/technology">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How we use Amazon Web Services | CertiSift">
+  <meta name="twitter:description" content="CertiSift&#39;s proposed AWS architecture: Amazon Textract, Amazon Bedrock, AWS Lambda, AWS Step Functions, Amazon S3, Amazon DynamoDB, API Gateway, Cognito, AWS KMS and CloudWatch.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CertiSift","url":"https://www.certisift.site","logo":"https://www.certisift.site/assets/favicon.svg","description":"CertiSift is supplier quality verification software for food and beverage manufacturers. QA and incoming-goods teams use it to check every supplier Certificate of Analysis against their own specifications, catch out-of-spec, missing or suspicious results, and keep an auditable record before a material lot is released to production.","slogan":"Intelligent Quality Verification. Smarter Manufacturing.","foundingDate":"2026","founder":[{"@type":"Person","name":"Abiola Tijani Babatunde","jobTitle":"CEO"}],"email":"tijani@certisift.site"}</script>
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="wrap nav">
+      <a class="logo" href="./" aria-label="CertiSift home">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="8" fill="#12211f"/>
+      <circle cx="9" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="9" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="9" cy="23" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="23" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="23" r="2.8" fill="#e6ef6b" opacity="1"/>
+    </svg><span>Certi<b>Sift</b></span></a>
+      <nav class="nav-links" aria-label="Main"><a href="product">Product</a><a href="how-it-works">How it works</a><a href="solutions">Solutions</a><a href="technology" aria-current="page">Technology</a><a href="security">Security</a><a href="pricing">Pricing</a><a href="about">Team</a></nav>
+      <div class="nav-cta"><a class="btn btn-ghost btn-sm" href="demo">Live demo</a><a class="btn btn-primary btn-sm" href="contact">Request early access</a></div>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu"><a href="product">Product</a><a href="how-it-works">How it works</a><a href="solutions">Solutions</a><a href="technology" aria-current="page">Technology</a><a href="security">Security</a><a href="pricing">Pricing</a><a href="about">Team</a><div class="btns"><a class="btn btn-ghost btn-sm" href="demo">Live demo</a><a class="btn btn-primary btn-sm" href="contact">Request early access</a></div></div>
+  </header>
+  <main id="main">
+
+    <section class="page-intro"><div class="wrap">
+      <span class="eyebrow">Technology</span>
+      <h1>How We Use Amazon Web Services</h1>
+      <p class="lede">What runs today, and how CertiSift's production platform is designed on AWS.</p>
+      
+    </div></section>
+    <section class="block" id="technology">
+      <div class="wrap">
+        
+        <div class="sec-head">
+          <div><span class="eyebrow">Technology</span><h2 class="title">How We Use Amazon Web Services</h2></div>
+          <p class="lede">CertiSift's production platform is designed as a serverless workflow on AWS: certificates go into encrypted storage, Amazon Textract and Amazon Bedrock turn scanned and unfamiliar layouts into structured results, and AWS Lambda checks them against your specification. Today the verification engine runs in the browser in the live demo.</p>
+        </div>
+        <ol class="pipeline"><li class="pipe"><span class="pipe-n">01</span><h3>Data collection</h3><p>QA users upload certificates and specifications through an authenticated API.</p><div class="pipe-svcs"><span>Amazon API Gateway</span><span>Amazon S3</span></div></li><li class="pipe"><span class="pipe-n">02</span><h3>Secure storage</h3><p>Certificates encrypted with customer-managed keys; specifications, suppliers and results stored per tenant.</p><div class="pipe-svcs"><span>Amazon S3</span><span>AWS KMS</span><span>Amazon DynamoDB</span></div></li><li class="pipe"><span class="pipe-n">03</span><h3>Processing</h3><p>Orchestrates extract → interpret → match → report, and runs specification matching and anomaly checks.</p><div class="pipe-svcs"><span>AWS Step Functions</span><span>AWS Lambda</span></div></li><li class="pipe"><span class="pipe-n">04</span><h3>AI intelligence</h3><p>Reads scanned and PDF certificates, interprets unfamiliar layouts and explains findings.</p><div class="pipe-svcs"><span>Amazon Textract</span><span>Amazon Bedrock</span></div></li><li class="pipe"><span class="pipe-n">05</span><h3>Application experience</h3><p>Sign-in with tenant isolation and roles; logs, metrics and alerts behind the web app.</p><div class="pipe-svcs"><span>Amazon Cognito</span><span>Amazon CloudWatch</span></div></li></ol>
+        <p class="pipe-note">These services are proposed, not yet deployed. The live demo runs in your browser on sample data.</p>
+        <ul class="svc-list"><li><b>Amazon Textract:</b> Extract text and tables from scanned and PDF certificates.</li><li><b>Amazon Bedrock:</b> Interpret unfamiliar layouts, normalise parameter names, assist anomaly review.</li><li><b>AWS Lambda:</b> Run extraction, matching and report generation steps.</li><li><b>AWS Step Functions:</b> Orchestrate the upload → extract → interpret → match → report workflow.</li><li><b>Amazon S3:</b> Encrypted storage of uploaded certificates and generated reports.</li><li><b>Amazon DynamoDB:</b> Supplier records, specifications and verification results.</li><li><b>Amazon API Gateway:</b> Secure API for the web app and future integrations.</li><li><b>Amazon Cognito:</b> User sign-in and per-customer tenant isolation.</li><li><b>AWS KMS:</b> Customer-managed encryption keys for documents and records.</li><li><b>Amazon CloudWatch:</b> Logs, metrics and alerting.</li></ul>
+      </div>
+    </section>
+    <section class="block alt">
+      <div class="wrap">
+        <div class="tech-grid">
+          <div class="tech-card">
+            <span class="badge implemented">Running now</span>
+            <h3 style="margin-top:12px">Verification engine</h3>
+            <p class="muted" style="margin:0">Runs in the browser in the live demo.</p>
+            <ul class="check-list">
+              <li>Header extraction: supplier, product, lot, dates, signatory</li>
+              <li>Result parsing incl. scientific notation, “&lt;10”, decimal commas, “Not detected”</li>
+              <li>Parameter aliases and unit equivalence (ppb ↔ µg/kg, ppm ↔ mg/kg)</li>
+              <li>Range, min, max and qualitative limits with near-limit warnings</li>
+              <li>Outlier, lot-reuse and copied-value detection against supplier history</li>
+            </ul>
+          </div>
+          <div class="tech-card">
+            <span class="badge proposed">Proposed architecture</span>
+            <h3 style="margin:12px 0 14px">Production platform on AWS</h3>
+            <svg class="arch" viewBox="0 0 640 380" role="img" aria-label="Proposed AWS architecture for CertiSift">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0d6e5c"/></marker></defs>
+      <rect x="1" y="1" width="638" height="378" rx="14" fill="none" stroke="#c9c0ad" stroke-dasharray="5 5"/>
+      <text x="16" y="24" font-size="10.5" fill="#5d6a66" letter-spacing="1.5">PROPOSED · NOT YET DEPLOYED</text>
+      <g><rect x="20" y="60" width="110" height="52" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="75" y="83" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">QA user</text><text x="75" y="99" text-anchor="middle" font-size="10" fill="#5d6a66">web app</text></g>
+      <g><rect x="170" y="60" width="120" height="52" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="230" y="83" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">API Gateway</text><text x="230" y="99" text-anchor="middle" font-size="10" fill="#5d6a66">REST API</text></g>
+      <g><rect x="170" y="140" width="120" height="46" rx="8" fill="#ece7db" stroke="#c9c0ad"/><text x="230" y="160" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Cognito</text><text x="230" y="176" text-anchor="middle" font-size="10" fill="#5d6a66">auth · tenants</text></g>
+      <line x1="130" y1="86" x2="168" y2="86" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/>
+      <line x1="230" y1="112" x2="230" y2="138" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/>
+      <rect x="320" y="44" width="300" height="200" rx="10" fill="#dcebe5" stroke="#0d6e5c" stroke-opacity=".4"/>
+      <text x="334" y="64" font-size="10.5" fill="#0a5648" letter-spacing="1.2">STEP FUNCTIONS WORKFLOW · LAMBDA</text>
+      <g><rect x="334" y="78" width="128" height="46" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="398" y="98" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Textract</text><text x="398" y="114" text-anchor="middle" font-size="10" fill="#5d6a66">text + tables</text></g>
+      <g><rect x="478" y="78" width="128" height="46" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="542" y="98" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Bedrock</text><text x="542" y="114" text-anchor="middle" font-size="10" fill="#5d6a66">interpret layout</text></g>
+      <g><rect x="334" y="140" width="128" height="46" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="398" y="160" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Spec matching</text><text x="398" y="176" text-anchor="middle" font-size="10" fill="#5d6a66">Lambda</text></g>
+      <g><rect x="478" y="140" width="128" height="46" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="542" y="160" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Anomaly checks</text><text x="542" y="176" text-anchor="middle" font-size="10" fill="#5d6a66">Lambda</text></g>
+      <g><rect x="406" y="196" width="128" height="38" rx="8" fill="#fffdf8" stroke="#c9c0ad"/><text x="470" y="212" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Report</text><text x="470" y="228" text-anchor="middle" font-size="10" fill="#5d6a66">Lambda</text></g>
+      <line x1="462" y1="101" x2="476" y2="101" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/><line x1="542" y1="124" x2="420" y2="138" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/><line x1="462" y1="163" x2="476" y2="163" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/><line x1="542" y1="186" x2="500" y2="196" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/>
+      <line x1="290" y1="86" x2="318" y2="86" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/>
+      <g><rect x="334" y="290" width="128" height="52" rx="8" fill="#ece7db" stroke="#c9c0ad"/><text x="398" y="313" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">Amazon S3</text><text x="398" y="329" text-anchor="middle" font-size="10" fill="#5d6a66">certificates · reports</text></g>
+      <g><rect x="478" y="290" width="128" height="52" rx="8" fill="#ece7db" stroke="#c9c0ad"/><text x="542" y="313" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">DynamoDB</text><text x="542" y="329" text-anchor="middle" font-size="10" fill="#5d6a66">specs · suppliers · results</text></g>
+      <line x1="398" y1="244" x2="398" y2="288" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/><line x1="542" y1="244" x2="542" y2="288" stroke="#0d6e5c" stroke-width="1.4" marker-end="url(#ah)"/>
+      <g><rect x="20" y="290" width="130" height="52" rx="8" fill="#ece7db" stroke="#c9c0ad"/><text x="85" y="313" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">AWS KMS</text><text x="85" y="329" text-anchor="middle" font-size="10" fill="#5d6a66">encryption keys</text></g>
+      <g><rect x="170" y="290" width="130" height="52" rx="8" fill="#ece7db" stroke="#c9c0ad"/><text x="235" y="313" text-anchor="middle" font-size="12" font-weight="600" fill="#12211f">CloudWatch</text><text x="235" y="329" text-anchor="middle" font-size="10" fill="#5d6a66">logs · alerts</text></g>
+      <line x1="150" y1="316" x2="332" y2="316" stroke="#c9c0ad" stroke-dasharray="3 3"/>
+    </svg>
+          </div>
+        </div>
+        <div class="tech-detail">
+          <div>
+            <h2 class="sub-h">How a certificate becomes a release decision</h2>
+            <ol class="dflow"><li><b>1. Upload</b><p>A QA user uploads a certificate through Amazon API Gateway. The file goes to Amazon S3, encrypted with the customer's AWS KMS key.</p></li><li><b>2. Extract</b><p>AWS Step Functions starts the workflow. Amazon Textract reads text and tables, including scanned PDFs.</p></li><li><b>3. Interpret</b><p>Amazon Bedrock maps unfamiliar layouts and parameter names to the specification. Low-confidence mappings are shown for review.</p></li><li><b>4. Check</b><p>AWS Lambda runs specification matching and anomaly checks and stores results in Amazon DynamoDB.</p></li><li><b>5. Decide and report</b><p>Reviewers sign in with Amazon Cognito, record release decisions and export reports. Amazon CloudWatch records logs and alerts.</p></li></ol>
+          </div>
+          <div class="side-cards">
+            <div class="card"><h2>Access and encryption (as designed)</h2><ul class="check-list"><li>Encryption in transit (TLS) and at rest with customer-managed AWS KMS keys</li><li>Each customer's certificates and records partitioned by tenant</li><li>Least-privilege IAM roles for every Lambda function</li><li>API requests authorised with Cognito tokens and checked on the server</li><li>Bedrock is called only with the customer's own documents; they are not used to train models</li></ul></div>
+            <div class="card"><h2>Proposed, not yet deployed</h2><p class="sub">Amazon Textract · Amazon Bedrock · AWS Lambda · AWS Step Functions · Amazon S3 · Amazon DynamoDB · Amazon API Gateway · Amazon Cognito · AWS KMS · Amazon CloudWatch</p><p class="sub" style="margin:0">Using AWS services does not by itself make CertiSift compliant with any regulation, including 21 CFR Part 11.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="wrap"><div class="cta-band">
+      <h2>See your next certificate checked in seconds.</h2>
+      <div class="btns"><a class="btn btn-primary" href="contact">Request early access</a><a class="btn btn-ghost" href="demo#/try">Explore the live demo</a></div>
+    </div></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid foot-grid-5">
+        <div><a class="logo" href="./" aria-label="CertiSift home">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="8" fill="#12211f"/>
+      <circle cx="9" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="9" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="9" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="16" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="9" cy="23" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="16" cy="23" r="1.9" fill="#f5f2ea" opacity="0.85"/><circle cx="23" cy="23" r="2.8" fill="#e6ef6b" opacity="1"/>
+    </svg><span>Certi<b>Sift</b></span></a><p class="muted" style="max-width:34ch;margin-top:14px;font-size:15px">CertiSift checks supplier Certificates of Analysis against your specifications and flags non-conforming materials before they reach production.</p><a href="mailto:tijani@certisift.site">tijani@certisift.site</a></div>
+        <div><h4>Product</h4><a href="product">Platform overview</a><a href="how-it-works">How it works</a><a href="demo">Live demo</a><a href="pricing">Pricing</a><a href="about#roadmap">Roadmap</a></div>
+        <div><h4>Solutions</h4><a href="solutions#qa-managers">QA managers</a><a href="solutions#incoming-goods">Incoming-goods QA</a><a href="solutions#supplier-quality">Supplier quality</a><a href="solutions#procurement">Procurement</a></div>
+        <div><h4>Company</h4><a href="about">About &amp; team</a><a href="technology">Technology (AWS)</a><a href="security">Security &amp; safeguards</a><a href="contact#faq">FAQ</a><a href="contact">Contact</a></div>
+        <div><h4>Legal</h4><a href="privacy">Privacy Policy</a><a href="terms">Terms of Service</a></div>
+      </div>
+      <div class="foot-base"><span>© 2026 CertiSift · certisift.site</span><span>Early access open · The live demo uses sample data.</span></div>
+    </div>
+  </footer>
+  <script src="src/page.js" defer></script>
+</body>
+</html>

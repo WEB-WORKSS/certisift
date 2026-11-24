@@ -1,13 +1,13 @@
 /*
  * CertiSift: Canonical Business Record (single source of truth)
  * ----------------------------------------------------------------
- * Every page, the LinkedIn kit, the AWS Activate answers, SEO metadata and
- * documentation read from this file. Edit facts HERE, nowhere else.
+ * Every page, the live demo, SEO metadata and documentation read from this file.
+ * scripts/build-pages.mjs generates the static pages from it. Edit facts HERE, nowhere else.
  *
  * Conventions:
  *   status: "verified"   -> supplied by the founder / confirmed
  *   status: "assumption" -> default or derived; must be confirmed before publishing as fact
- *   value: null          -> unknown; public pages hide it, the Application Center lists it
+ *   value: null          -> unknown; public pages hide it
  */
 window.CS = window.CS || {};
 
@@ -18,22 +18,14 @@ CS.business = {
     "CertiSift checks supplier Certificates of Analysis against your specifications and flags non-conforming materials before they reach production.",
 
   // ---- Facts that still need verification (null = unknown) -------------
-  domain: { value: null, status: "assumption", suggestion: "certisift.com", note: "Domain ownership not confirmed." },
-  email: { value: null, status: "assumption", note: "Official business email not supplied." },
+  domain: { value: "certisift.site", status: "verified", note: "Live at https://www.certisift.site." },
+  email: { value: "tijani@certisift.site", status: "verified", note: "Official business email, supplied by the founder." },
+  formEndpoint: null, // optional HTTPS endpoint that accepts POSTed JSON from the early-access form
   headquarters: { value: null, status: "assumption", note: "Headquarters not supplied." },
   foundingYear: { value: 2026, status: "assumption", note: "Default assumption from master prompt." },
   companyType: { value: "Privately Held", status: "assumption" },
   companySize: { value: "2–10 employees", status: "assumption", note: "Suggested LinkedIn bracket; confirm actual team size." },
-  linkedin: {
-    value: null,
-    status: "assumption",
-    proposedSlug: "certisift",
-    alternativeSlug: "certi-sift",
-    note: "Direct requests returned 404, which does not prove availability. Confirm during page creation.",
-  },
-  nameConflict: {
-    note: "A similarly named 'CertiSwift' project exists on LinkedIn with a different focus. Run trademark searches (classes 9 and 42) before launch.",
-  },
+  linkedin: { value: null, status: "assumption", note: "Only linked once a verified company page exists." },
 
   // ---- Leadership ---------------------------------------------------------
   founders: [
@@ -42,7 +34,7 @@ CS.business = {
       title: "CEO",
       linkedin: null,
       status: "verified",
-      // Drafted for the founder's approval. Edit to his own words before publishing.
+      // Drafted for the founder's approval. Edit to their own words before publishing.
       quote:
         "Every lot that reaches production should be released on evidence, not on a quick look at a PDF. I founded CertiSift so quality teams can check every supplier certificate against their own specification quickly, consistently and with a record they can stand behind.",
       aim: "To make supplier certificate checks fast, consistent and audit-ready for every food manufacturer, so non-conforming materials are stopped before production begins.",
@@ -51,7 +43,6 @@ CS.business = {
 
   // ---- Positioning ------------------------------------------------------
   industry: "Manufacturing Technology / AI-powered Quality Assurance SaaS",
-  linkedinIndustry: "Software Development",
   businessModel: "B2B SaaS",
   category: "Supplier quality verification software",
   stage: {
@@ -149,11 +140,11 @@ CS.business = {
 
   pricing: {
     status: "assumption",
-    note: "No pricing has been set. Public site describes pilot structure only.",
+    note: "Proposed launch pricing, shown on the site as proposed. Confirm before taking payment.",
     plans: [
-      { name: "Pilot", for: "One site, one QA team", points: ["Guided setup of your specifications", "Sample and real CoA testing", "Weekly review with the founder"] },
-      { name: "Site", for: "Single production site", points: ["Unlimited specifications", "Supplier monitoring", "Exportable audit reports"] },
-      { name: "Multi-site", for: "Groups with several plants", points: ["Shared supplier records", "Roles and approvals (roadmap)", "Integration support (roadmap)"] },
+      { name: "Pilot", for: "One site, one QA team", price: "$149", points: ["Up to 100 certificates a month", "Guided setup of your specifications", "Specification matching and anomaly checks", "Lot reports and CSV export", "Weekly review with the founder"] },
+      { name: "Site", for: "A single production site", price: "$449", points: ["Up to 1,000 certificates a month", "Unlimited specifications", "Supplier quality monitoring", "Exportable audit reports", "Up to 15 users"] },
+      { name: "Multi-site", for: "Groups with several plants", price: "Custom", points: ["Shared supplier records", "Roles and approval steps", "ERP / LIMS integration", "Single sign-on", "Dedicated onboarding"] },
     ],
   },
 
@@ -173,27 +164,4 @@ CS.business = {
   ],
 
   copyrightYear: 2026,
-};
-
-/* Facts that must be verified before publishing / applying. Derived, not edited. */
-CS.verificationItems = function () {
-  const b = CS.business;
-  const items = [];
-  const push = (label, ok, detail, blocker) => items.push({ label, ok, detail, blocker: !!blocker });
-  push("Company domain", !!b.domain.value, b.domain.value || `Not confirmed. Suggested: ${b.domain.suggestion}`, true);
-  push("Official business email", !!b.email.value, b.email.value || "Not supplied. Needed for website contact and AWS account.", true);
-  push("Founder name and title", b.founders.length > 0, b.founders.length ? b.founders.map((f) => `${f.name}, ${f.title}`).join("; ") : "Not supplied. Team section is hidden on the website.", true);
-  if (b.founders.length) {
-    const noLi = b.founders.filter((f) => !f.linkedin);
-    push("Founder LinkedIn profile", noLi.length === 0, noLi.length ? `Not supplied for ${noLi.map((f) => f.name).join(", ")}. Recommended for AWS Activate credibility.` : "Linked");
-  }
-  push("LinkedIn company page", !!b.linkedin.value, b.linkedin.value || `Not created. Proposed: linkedin.com/company/${b.linkedin.proposedSlug}`, true);
-  push("Headquarters", !!b.headquarters.value, b.headquarters.value || "Not supplied.");
-  push("Founding year", b.foundingYear.status === "verified", `${b.foundingYear.value} (${b.foundingYear.status})`);
-  push("Company size", b.companySize.status === "verified", `${b.companySize.value} (${b.companySize.status})`);
-  push("Trademark / name clearance", false, b.nameConflict.note);
-  push("Pricing", b.pricing.status === "verified", b.pricing.note);
-  push("AWS Activate Provider Organizational ID", false, "Required for the Portfolio package; obtained from your accelerator, incubator or investor. Without one, apply to Activate Founders instead.", true);
-  push("Production AWS deployment", b.aws.some((a) => a.status === "deployed"), "No services deployed. All AWS services are described as proposed architecture.");
-  return items;
 };

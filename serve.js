@@ -5,10 +5,11 @@ const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; ch
 http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split("?")[0]);
   if (p === "/") p = "/index.html";
+  else if (!path.extname(p)) p += ".html"; // clean URLs, as on Vercel
   const file = path.normalize(path.join(root, p));
   if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
   fs.readFile(file, (err, data) => {
-    if (err) { res.writeHead(404); return res.end("Not found"); }
+    if (err) { res.writeHead(404, { "Content-Type": types[".html"] }); return res.end(fs.existsSync(path.join(root, "404.html")) ? fs.readFileSync(path.join(root, "404.html")) : "Not found"); }
     res.writeHead(200, { "Content-Type": types[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-store" });
     res.end(data);
   });
