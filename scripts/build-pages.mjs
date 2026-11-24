@@ -388,7 +388,7 @@ const team = () => `
           ${p.quote ? `<blockquote>“${esc(p.quote)}”</blockquote>` : ""}
           <figcaption>
             <div class="mono-badge" aria-hidden="true">${esc(initials(p.name))}</div>
-            <div><b>${esc(p.name)}</b><span>${esc(p.title)}, ${esc(B.name)} · Founded ${esc(YEAR)}</span>${i === 0 && EMAIL ? `<a href="mailto:${esc(EMAIL)}">${esc(EMAIL)}</a>` : ""}${p.linkedin ? ` <a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>
+            <div><b>${esc(p.name)}</b><span>${esc(p.title)}, ${esc(B.name)} · Founded ${esc(YEAR)}</span>${p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>` : ""}${p.linkedin ? ` <a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>
           </figcaption>
           ${p.aim ? `<div class="aim"><span>Our aim</span><p>${esc(p.aim)}</p></div>` : ""}
         </figure>`).join("")}

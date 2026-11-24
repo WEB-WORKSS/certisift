@@ -32,6 +32,7 @@ CS.business = {
     {
       name: "Tijani Babatunde",
       title: "CEO",
+      email: "babatunde@certisift.site",
       linkedin: null,
       status: "verified",
       // Drafted for the founder's approval. Edit to their own words before publishing.
@@ -42,6 +43,7 @@ CS.business = {
     {
       name: "Paul Okom",
       title: "CTO",
+      email: "paul@certisift.site",
       role: "Co-founder",
       linkedin: null,
       status: "verified",
