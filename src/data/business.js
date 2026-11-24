@@ -25,7 +25,7 @@ CS.business = {
   foundingYear: { value: 2026, status: "assumption", note: "Default assumption from master prompt." },
   companyType: { value: "Privately Held", status: "assumption" },
   companySize: { value: "2–10 employees", status: "assumption", note: "Suggested LinkedIn bracket; confirm actual team size." },
-  linkedin: { value: null, status: "assumption", note: "Only linked once a verified company page exists." },
+  linkedin: { value: "https://www.linkedin.com/company/certisift", status: "verified", note: "Company LinkedIn page, supplied by the founder." },
 
   // ---- Leadership ---------------------------------------------------------
   founders: [

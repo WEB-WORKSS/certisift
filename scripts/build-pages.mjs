@@ -392,6 +392,7 @@ const team = () => `
           </figcaption>
           ${p.aim ? `<div class="aim"><span>Our aim</span><p>${esc(p.aim)}</p></div>` : ""}
         </figure>`).join("")}
+        ${B.linkedin.value ? `<p class="company-link"><a class="btn btn-ghost btn-sm" href="${esc(B.linkedin.value)}" target="_blank" rel="noopener">Follow ${esc(B.name)} on LinkedIn ↗</a></p>` : ""}
         <dl class="facts">${[["Founded", YEAR], ["Category", "Supplier quality software"], ["Stage", "Building initial product"], ["Company type", B.companyType.value]].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
         <div class="hear card"><span class="eyebrow">We'd like to hear from</span><ul>${["Food and beverage sites willing to pilot", "QA and supplier quality managers", "Advisors who know food safety and supplier assurance"].map((x) => `<li>${x}</li>`).join("")}</ul></div>
       </div>
