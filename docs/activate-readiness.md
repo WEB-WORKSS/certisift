@@ -11,7 +11,7 @@ Checked against the website prompt, Part I, for https://www.certisift.site once 
 | HTTPS, `www` host, no placeholders, no broken links, working mobile layout | Pass (verify on Vercel after deploy) |
 | Separate pages: product, how it works, solutions, technology, security, pricing, about/team, contact, privacy, terms | Pass |
 | Live demo reachable from the main nav, labelled sample data, no login | Pass (`/demo`) |
-| Named founder with title and statement | Pass (Abiola Tijani Babatunde, CEO; quote and aim shown) |
+| Named founder with title and statement | Pass (Tijani Babatunde, CEO; quote and aim shown) |
 | Stage stated honestly ("Early access open", "These services are proposed, not yet deployed") | Pass |
 | AWS section and `/technology` page naming each service and its job | Pass |
 | Sourced industry figures, comparison table, roadmap, FAQ, proposed pricing | Pass |

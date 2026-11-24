@@ -30,7 +30,7 @@ CS.business = {
   // ---- Leadership ---------------------------------------------------------
   founders: [
     {
-      name: "Abiola Tijani Babatunde",
+      name: "Tijani Babatunde",
       title: "CEO",
       linkedin: null,
       status: "verified",
