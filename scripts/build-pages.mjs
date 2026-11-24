@@ -382,13 +382,13 @@ const team = () => `
     <section class="block" id="team">
       <div class="wrap">
         ${head("Team", `The Team Behind ${B.name}`, `${B.name} is a quality-assurance software company founded in ${YEAR}. It is building supplier certificate verification software for food and beverage manufacturers.`)}
-        ${B.founders.map((p) => `
-        <figure class="founder">
-          <span class="eyebrow">Founder</span>
+        ${B.founders.map((p, i) => `
+        <figure class="founder${p.quote ? "" : " compact"}">
+          <span class="eyebrow">${esc(p.role || (i ? "Co-founder" : "Founder"))}</span>
           ${p.quote ? `<blockquote>“${esc(p.quote)}”</blockquote>` : ""}
           <figcaption>
             <div class="mono-badge" aria-hidden="true">${esc(initials(p.name))}</div>
-            <div><b>${esc(p.name)}</b><span>${esc(p.title)}, ${esc(B.name)} · Founded ${esc(YEAR)}</span>${EMAIL ? `<a href="mailto:${esc(EMAIL)}">${esc(EMAIL)}</a>` : ""}${p.linkedin ? ` <a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>
+            <div><b>${esc(p.name)}</b><span>${esc(p.title)}, ${esc(B.name)} · Founded ${esc(YEAR)}</span>${i === 0 && EMAIL ? `<a href="mailto:${esc(EMAIL)}">${esc(EMAIL)}</a>` : ""}${p.linkedin ? ` <a href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : ""}</div>
           </figcaption>
           ${p.aim ? `<div class="aim"><span>Our aim</span><p>${esc(p.aim)}</p></div>` : ""}
         </figure>`).join("")}

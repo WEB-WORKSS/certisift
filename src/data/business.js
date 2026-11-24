@@ -39,6 +39,13 @@ CS.business = {
         "Every lot that reaches production should be released on evidence, not on a quick look at a PDF. I founded CertiSift so quality teams can check every supplier certificate against their own specification quickly, consistently and with a record they can stand behind.",
       aim: "To make supplier certificate checks fast, consistent and audit-ready for every food manufacturer, so non-conforming materials are stopped before production begins.",
     },
+    {
+      name: "Paul Okom",
+      title: "CTO",
+      role: "Co-founder",
+      linkedin: null,
+      status: "verified",
+    },
   ],
 
   // ---- Positioning ------------------------------------------------------
