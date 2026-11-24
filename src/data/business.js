@@ -19,7 +19,7 @@ CS.business = {
 
   // ---- Facts that still need verification (null = unknown) -------------
   domain: { value: "certisift.site", status: "verified", note: "Live at https://www.certisift.site." },
-  email: { value: "tijani@certisift.site", status: "verified", note: "Official business email, supplied by the founder." },
+  email: { value: "babatunde@certisift.site", status: "verified", note: "Official business email, supplied by the founder." },
   formEndpoint: null, // optional HTTPS endpoint that accepts POSTed JSON from the early-access form
   headquarters: { value: null, status: "assumption", note: "Headquarters not supplied." },
   foundingYear: { value: 2026, status: "assumption", note: "Default assumption from master prompt." },
